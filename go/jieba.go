@@ -64,7 +64,7 @@ func cut(this js.Value, args []js.Value) interface{} {
 	}
 	input := args[0].String()
 	mode := false
-	if len(args) >= 2 {
+	if len(args) >= 2 && !args[1].IsUndefined() {
 		if args[1].Type().String() != "boolean" {
 			return "expected a boolean param"
 		} else {
@@ -91,7 +91,7 @@ func cutForSearch(this js.Value, args []js.Value) interface{} {
 	}
 	input := args[0].String()
 	mode := false
-	if len(args) >= 2 {
+	if len(args) >= 2 && !args[1].IsUndefined() {
 		if args[1].Type().String() != "boolean" {
 			return "expected a boolean param"
 		} else {

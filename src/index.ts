@@ -10,12 +10,18 @@ declare global {
   }
 }
 
+export interface Jieba {
+  cutAll(input: string): string[]
+  cut(input: string, hmm?: boolean): string[]
+  cutForSearch(input: string, hmm?: boolean): string[]
+}
+
 export interface InitOptions {
   wasm?: ArrayBuffer
   dict?: string
 }
 
-export async function init(options?: InitOptions) {
+export async function init(options?: InitOptions): Promise<Jieba> {
   globalThis.jieba = {}
   let wasm: ArrayBuffer
   let dict: string
@@ -36,7 +42,30 @@ export async function init(options?: InitOptions) {
 
   const result = globalThis.jieba.load(dict)
   if (result) {
-    return new Error(result)
+    throw new Error(result)
+  }
+  return {
+    cutAll(input) {
+      const result = globalThis.jieba.cutAll(input)
+      if (typeof result === 'string') {
+        throw new Error(result)
+      }
+      return result
+    },
+    cut(input, hmm) {
+      const result = globalThis.jieba.cut(input, hmm)
+      if (typeof result === 'string') {
+        throw new Error(result)
+      }
+      return result
+    },
+    cutForSearch(input, hmm) {
+      const result = globalThis.jieba.cutForSearch(input, hmm)
+      if (typeof result === 'string') {
+        throw new Error(result)
+      }
+      return result
+    },
   }
 }
 
@@ -65,5 +94,3 @@ async function loadFile<T extends boolean = false>(
   }
   return result
 }
-
-init()

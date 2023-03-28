@@ -7,7 +7,7 @@
   "author": "Anillc <void@anillc.cn>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && find src -type f | grep -P '.*(?<!\\.ts)$' | xargs cp -t lib/"
+    "build": "./go/build.sh && tsc && find src -type f | grep -P '.*(?<!\\.ts)$' | xargs cp -t lib/"
   },
   "devDependencies": {
     "@types/golang-wasm-exec": "^1.15.0",
